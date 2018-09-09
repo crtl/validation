@@ -12,42 +12,30 @@ namespace Crtl\Validation;
 class Validator
 {
 
+    /**
+     * @var array
+     */
     protected $rules;
 
+    /**
+     * @var array
+     */
     protected $errors;
 
+    /**
+     * Validator constructor.
+     * @param array $rules
+     */
     public function __construct(array $rules = []) {
         $this->setRules($rules);
     }
 
+    /**
+     * @param array $rules
+     */
     public function parseRules(array $rules) {
         foreach ($rules as $ruleName => $fieldsConfig) {
             $this->parseRule($ruleName, $fieldsConfig);
-        }
-    }
-
-    public function parseRule(string $rule, $fieldsConfig) {
-        $parsedConfig = [];
-
-        if (is_string($fieldsConfig)) {
-            return $this->rules[$rule][$fieldsConfig] = [];
-        }
-
-        if (!is_array($fieldsConfig)) {
-            throw new \InvalidArgumentException("Invalid configuration for rule '{$rule}': " . print_r($fieldsConfig, true));
-        }
-
-        //Transform [field1, field2, ...] to [field1 => [], field2 => [], ...]
-        array_walk($fieldsConfig, function($field, $key) use (&$fieldsConfig) {
-            if (is_numeric($key)) {
-                $fieldsConfig[$field] = [];
-                unset($fieldsConfig[$key]);
-            }
-        });
-
-
-        foreach ($fieldsConfig as $field => $fieldConfig) {
-            $this->rules[$rule][$field] = is_array($fieldConfig) ? $fieldConfig : [$fieldConfig];
         }
     }
 
@@ -106,19 +94,62 @@ class Validator
 
     }
 
+    /**
+     * @return array
+     */
     public function getErrors() {
         return $this->errors;
     }
 
+    /**
+     * @return array
+     */
     public function getRules() {
         return $this->rules;
     }
 
+    /**
+     * Reset current state
+     */
     public function reset() {
         $this->errors = [];
     }
 
-    protected function addError($field, $rule) {
+    /**
+     * @param string $rule
+     * @param $fieldsConfig
+     * @return array
+     */
+    protected function parseRule(string $rule, $fieldsConfig) {
+        $parsedConfig = [];
+
+        if (is_string($fieldsConfig)) {
+            return $this->rules[$rule][$fieldsConfig] = [];
+        }
+
+        if (!is_array($fieldsConfig)) {
+            throw new \InvalidArgumentException("Invalid configuration for rule '{$rule}': " . print_r($fieldsConfig, true));
+        }
+
+        //Transform [field1, field2, ...] to [field1 => [], field2 => [], ...]
+        array_walk($fieldsConfig, function($field, $key) use (&$fieldsConfig) {
+            if (is_numeric($key)) {
+                $fieldsConfig[$field] = [];
+                unset($fieldsConfig[$key]);
+            }
+        });
+
+
+        foreach ($fieldsConfig as $field => $fieldConfig) {
+            $this->rules[$rule][$field] = is_array($fieldConfig) ? $fieldConfig : [$fieldConfig];
+        }
+    }
+
+    /**
+     * @param $field
+     * @param $rule
+     */
+    protected function addError(string $field, string $rule) {
         $this->errors[$field][] = $rule;
     }
 

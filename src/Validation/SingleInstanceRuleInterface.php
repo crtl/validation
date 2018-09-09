@@ -8,7 +8,11 @@
 
 namespace Crtl\Validation;
 
-
+/**
+ * Interface SingleInstanceRuleInterface
+ * Interface to be implemented by rules which are instantiated once per scope
+ * @package Crtl\Validation
+ */
 interface SingleInstanceRuleInterface extends RuleInterface
 {
 

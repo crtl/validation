@@ -8,7 +8,11 @@
 
 namespace Crtl\Validation;
 
-
+/**
+ * Interface RuleInterface
+ * Interface to be implemented by validation rules
+ * @package Crtl\Validation
+ */
 interface RuleInterface
 {
     public function __construct(array $config);

@@ -11,6 +11,11 @@ namespace Crtl\Validation\Custom;
 
 use Crtl\Validation\RuleInterface;
 
+/**
+ * Class Rule
+ * Mock Class for testing RuleInterface implementation
+ * @package Crtl\Validation\Custom
+ */
 class Rule implements RuleInterface
 {
     public function __construct(array $config)

@@ -11,6 +11,11 @@ namespace Crtl\Validation\Custom;
 
 use Crtl\Validation\SingleInstanceRuleInterface;
 
+/**
+ * Class SingleRule
+ * Mock class for testing custom SingleInstanceRuleInterface implementation
+ * @package Crtl\Validation\Custom
+ */
 class SingleRule implements SingleInstanceRuleInterface
 {
 
