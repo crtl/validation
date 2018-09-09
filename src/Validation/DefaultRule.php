@@ -71,6 +71,36 @@ class DefaultRule implements RuleInterface
         return !empty($this->value);
     }
 
+    protected function validateBoolean() {
+        return filter_var($this->value, FILTER_VALIDATE_BOOLEAN, $this->config) !== false;
+    }
+
+    protected function validateNumber() {
+        return is_numeric($this->value);
+    }
+
+    protected function validateFloat() {
+        return is_float($this->value);
+    }
+
+    protected function validateInt() {
+        return is_int($this->value);
+    }
+
+    protected function validateMin() {
+        if ($this->config[1] ?? false) {
+            return $this->value > $this->config[0];
+        }
+        return $this->value >= $this->config[0];
+    }
+
+    protected function validateMax() {
+        if ($this->config[1] ?? false) {
+            return $this->value < $this->config[0];
+        }
+        return $this->value <= $this->config[0];
+    }
+
     protected function validateString() {
         return is_string($this->value);
     }
@@ -97,6 +127,28 @@ class DefaultRule implements RuleInterface
         return $length <= $this->value;
     }
 
+    protected function validateArray() {
+        return is_array($this->value);
+    }
+
+    protected function validateMinCount() {
+        if ($this->config[1] ?? false) {
+            return is_array($this->value) && count($this->value) > $this->config[0];
+        }
+        return is_array($this->value) && count($this->value) >= $this->config[0];
+    }
+
+    protected function validateMaxCount() {
+        if ($this->config[1] ?? false) {
+            return is_array($this->value) && count($this->value) < $this->config[0];
+        }
+        return is_array($this->value) && count($this->value) <= $this->config[0];
+    }
+
+    protected function validateCount() {
+        return is_array($this->value) && count($this->value) === $this->config[0];
+    }
+
     protected function validateEmail() {
         return filter_var($this->value, FILTER_VALIDATE_EMAIL) !== false;
     }
@@ -111,10 +163,6 @@ class DefaultRule implements RuleInterface
 
     protected function validateIpv4() {
         return filter_var($this->value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false;
-    }
-
-    protected function validateNumber() {
-        return is_numeric($this->value);
     }
 
     protected function validatePattern() {
@@ -137,9 +185,7 @@ class DefaultRule implements RuleInterface
         return filter_var($this->value, FILTER_VALIDATE_URL, $this->config) !== false;
     }
 
-    protected function validateBoolean() {
-        return filter_var($this->value, FILTER_VALIDATE_BOOLEAN, $this->config) !== false;
-    }
+
 
     protected function validateMac() {
         return filter_var($this->value, FILTER_VALIDATE_MAC, $this->config) !== false;
@@ -153,43 +199,4 @@ class DefaultRule implements RuleInterface
         return $this->value == $this->config[1];
     }
 
-    protected function validateMinCount() {
-        if ($this->config[1] ?? false) {
-            return is_array($this->value) && count($this->value) > $this->config[0];
-        }
-        return is_array($this->value) && count($this->value) >= $this->config[0];
-    }
-
-    protected function validateMaxCount() {
-        if ($this->config[1] ?? false) {
-            return is_array($this->value) && count($this->value) < $this->config[0];
-        }
-        return is_array($this->value) && count($this->value) <= $this->config[0];
-    }
-
-    protected function validateCount() {
-        return is_array($this->value) && count($this->value) === $this->config[0];
-    }
-
-    protected function validateMin() {
-        if ($this->config[1] ?? false) {
-            return $this->value > $this->config[0];
-        }
-        return $this->value >= $this->config[0];
-    }
-
-    protected function validateMax() {
-        if ($this->config[1] ?? false) {
-            return $this->value < $this->config[0];
-        }
-        return $this->value <= $this->config[0];
-    }
-
-    protected function validateInt() {
-        return is_int($this->value);
-    }
-
-    protected function validateFloat() {
-        return is_float($this->value);
-    }
 }
