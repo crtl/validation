@@ -34,6 +34,35 @@ if (!$validator->validate($data)) {
 
 ```
 
+## Built In Rules
+
+- required
+- boolean
+- number
+- float
+- int
+- min `[value, exclusive:bool=false]`
+- max `[value, exclusive:bool=false]`
+- string
+- length
+- minLength `[value, exclusive:bool=false]`
+- maxLength `[value, exclusive:bool=false]`
+- array
+- count
+- maxCount `[value, exclusive:bool=false]`
+- minCount `[value, exclusive:bool=false]`
+- email
+- ip
+- ipv6
+- ipv4
+- alnum
+- digit
+- mac
+- domain
+- url
+- pattern
+- equals `[value, strict:bool=false]`
+
 ## Define Custom Validation Rules
 
 To define custom validation rules you can either implement the 
@@ -82,6 +111,8 @@ $validator = new Crtl\Validation\Validator([
 $validator->validate($data);
 
 ```
+
+
 
 ## Errors
 

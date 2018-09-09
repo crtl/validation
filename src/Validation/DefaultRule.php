@@ -33,6 +33,16 @@ class DefaultRule implements RuleInterface
     const DIGIT = "digit";
     const PATTERN = "pattern";
     const NUMBER = "number";
+    const FLOAT = "float";
+    const INT = "int";
+    const STRING = "string";
+    const ARRAY = "array";
+    const MIN = "min";
+    const MAX = "max";
+    const COUNT = "count";
+    const MIN_COUNT = "minCount";
+    const MAX_COUNT = "maxCount";
+    const EQUALS = "equals";
 
     public function __construct(array $config)
     {
@@ -59,6 +69,14 @@ class DefaultRule implements RuleInterface
 
     protected function validateRequired() {
         return !empty($this->value);
+    }
+
+    protected function validateString() {
+        return is_string($this->value);
+    }
+
+    protected function validateLength() {
+        return strlen($this->value) === $this->config[0];
     }
 
     protected function validateMinLength() {
@@ -125,5 +143,53 @@ class DefaultRule implements RuleInterface
 
     protected function validateMac() {
         return filter_var($this->value, FILTER_VALIDATE_MAC, $this->config) !== false;
+    }
+
+    protected function validateEquals() {
+        if ($this->config[1] ?? false) {
+            return $this->value === $this->config[0];
+        }
+
+        return $this->value == $this->config[1];
+    }
+
+    protected function validateMinCount() {
+        if ($this->config[1] ?? false) {
+            return is_array($this->value) && count($this->value) > $this->config[0];
+        }
+        return is_array($this->value) && count($this->value) >= $this->config[0];
+    }
+
+    protected function validateMaxCount() {
+        if ($this->config[1] ?? false) {
+            return is_array($this->value) && count($this->value) < $this->config[0];
+        }
+        return is_array($this->value) && count($this->value) <= $this->config[0];
+    }
+
+    protected function validateCount() {
+        return is_array($this->value) && count($this->value) === $this->config[0];
+    }
+
+    protected function validateMin() {
+        if ($this->config[1] ?? false) {
+            return $this->value > $this->config[0];
+        }
+        return $this->value >= $this->config[0];
+    }
+
+    protected function validateMax() {
+        if ($this->config[1] ?? false) {
+            return $this->value < $this->config[0];
+        }
+        return $this->value <= $this->config[0];
+    }
+
+    protected function validateInt() {
+        return is_int($this->value);
+    }
+
+    protected function validateFloat() {
+        return is_float($this->value);
     }
 }
