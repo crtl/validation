@@ -9,6 +9,8 @@
 namespace Crtl\Test\Validation;
 
 
+use Crtl\Validation\Custom\Rule;
+use Crtl\Validation\Custom\SingleRule;
 use Crtl\Validation\Validator;
 use PHPUnit\Framework\TestCase;
 
@@ -91,4 +93,18 @@ class ValidatorTest extends TestCase
         $this->assertArrayHasKey("email", $errors);
     }
 
+    public function testCustomValidator() {
+        $validator = new Validator([
+            Rule::class => ["field1", "field2"],
+            SingleRule::class => ["field1", "field2", "field3"]
+        ]);
+
+        $validator->validate([
+            "field1" => "test",
+            "field2" => "test",
+            "field3" => "test",
+        ]);
+
+        $this->assertEquals(1, SingleRule::$instanceCount);
+    }
 }
