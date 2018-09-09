@@ -1,12 +1,12 @@
 # Validation Framework
 
-##Feature Requirements
+## Feature Requirements
 
 1. Easy to use
 2. Easy to extend
 3. Basic functionality
 
-##Usage
+## Usage
 
 ```php
 use Crtl\Validation\Custom\Rule as CustomRule;
@@ -28,7 +28,7 @@ if (!$validator->validate($data)) {
 
 ```
 
-##Define Custom Validation Rules
+## Define Custom Validation Rules
 
 To define custom validation rules you can either implement the 
 `Crtl\Validation\RuleInterface` or the 
@@ -77,7 +77,7 @@ $validator->validate($data);
 
 ```
 
-#Errors
+## Errors
 
 Errors can be retrieved by calling `Crtl\Validation\Validator::getErrors`.
 Errors are resetted by calling `Crtl\Validation\Validator::validate`.
