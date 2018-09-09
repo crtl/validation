@@ -6,6 +6,12 @@
 2. Easy to extend
 3. Basic functionality
 
+## Installation
+
+```
+composer require crtl/validation
+```
+
 ## Usage
 
 ```php
