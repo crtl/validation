@@ -9,6 +9,8 @@
 namespace Crtl\Validation\Custom;
 
 
+use Crtl\Validation\SingleInstanceRuleInterface;
+
 class SingleRule implements SingleInstanceRuleInterface
 {
 
@@ -16,7 +18,6 @@ class SingleRule implements SingleInstanceRuleInterface
 
     public function __construct(array $config)
     {
-        parent::__construct($config);
         self::$instanceCount++;
     }
 
